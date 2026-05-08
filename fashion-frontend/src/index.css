@@ -1,0 +1,108 @@
+/* =========================================
+   1. GLOBAL FONT & VARIABLES
+   ========================================= */
+/* Importing a clean, premium font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* Brand Colors */
+    --primary-color: #ff3f6c; /* Myntra Pink */
+    --primary-hover: #e0355f;
+
+    /* Text Colors */
+    --text-dark: #282c3f;     /* Deep gray for headings */
+    --text-light: #535766;    /* Soft gray for descriptions/footer */
+
+    /* Background Colors */
+    --bg-color: #fdfbfb;
+    --white: #ffffff;
+
+    /* Animations */
+    --transition: all 0.3s ease;
+}
+
+/* =========================================
+   2. GLOBAL RESETS
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Overrides the default React fonts */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================
+   3. GLOBAL COMPONENTS
+   ========================================= */
+/* A reusable button style used across the whole app */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 12px 30px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 63, 108, 0.3);
+}
+
+/* =========================================
+   4. PROFESSIONAL FOOTER STYLES
+   ========================================= */
+.professional-footer {
+    background-color: var(--white);
+    border-top: 1px solid #eaeaec;
+    padding: 30px 0;
+    margin-top: 80px; /* Pushes the footer down away from content */
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between; /* Copyright on left, Links on right */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.copyright-text {
+    color: var(--text-light);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.footer-links {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-link-item {
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.footer-link-item:hover {
+    color: var(--primary-color);
+}
+
