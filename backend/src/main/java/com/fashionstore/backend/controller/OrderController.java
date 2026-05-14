@@ -22,8 +22,9 @@ public class OrderController {
     private CartRepository cartRepository;
 
     // 1. The Checkout Endpoint!
+    // UPDATED: Now accepts an address parameter!
     @PostMapping("/checkout/{userId}")
-    public Order placeOrder(@PathVariable int userId) {
+    public Order placeOrder(@PathVariable int userId, @RequestParam String address) {
         // Step A: Get everything in the user's cart
         List<CartItem> cartItems = cartRepository.findByUserId(userId);
 
@@ -42,6 +43,7 @@ public class OrderController {
         Order newOrder = new Order();
         newOrder.setUserId(userId);
         newOrder.setTotalPrice(total);
+        newOrder.setAddress(address); // NEW: Save the address!
         Order savedOrder = orderRepository.save(newOrder);
 
         // Step D: Empty the cart!

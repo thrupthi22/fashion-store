@@ -1,77 +1,66 @@
 .product-card {
-    background: var(--white);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: var(--transition);
-    border: 1px solid #eaeaec;
+    background-color: var(--card-bg);
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(54, 44, 40, 0.04);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.5s ease;
 }
 
+/* Float up and softly shadow on hover */
 .product-card:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(54, 44, 40, 0.1);
+    border-color: var(--accent-color);
 }
 
 .product-image-container {
-    height: 300px;
     overflow: hidden;
+    background: #EAE6DF;
+    margin-bottom: 15px;
 }
 
 .product-image {
     width: 100%;
-    height: 100%;
+    height: 350px;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.8s ease, filter 0.8s ease;
+    /* Adds a subtle vintage, low-contrast wash to the photos */
+    filter: contrast(0.9) brightness(0.95) sepia(0.1);
 }
 
+/* The beautiful image reveal on hover */
 .product-card:hover .product-image {
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    transform: scale(1.05);
+    filter: contrast(1.0) brightness(1.0) sepia(0);
 }
 
 .product-info {
-    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .product-brand {
-    font-size: 12px;
-    color: var(--text-light);
+    font-size: 0.75rem;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     margin-bottom: 5px;
 }
 
 .product-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text-dark);
-    margin-bottom: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 1.3rem;
+    margin: 0 0 10px 0;
+    color: var(--primary-dark);
 }
 
 .product-price {
-    margin-bottom: 15px;
-}
-
-.price-bold {
-    font-size: 16px;
+    font-size: 1.1rem;
+    font-family: var(--body-font);
+    color: var(--accent-color);
+    margin-bottom: 20px;
     font-weight: 700;
-    color: var(--text-dark);
-}
-
-.add-to-cart-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: transparent;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-    font-weight: 600;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.add-to-cart-btn:hover {
-    background-color: var(--primary-color);
-    color: var(--white);
 }

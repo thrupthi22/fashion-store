@@ -1,68 +1,82 @@
 .navbar {
-    background-color: var(--white);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 15px 0;
+    /* Soft shadow so it floats gracefully */
+    box-shadow: 0 4px 20px rgba(54, 44, 40, 0.05);
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 20px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
+/* The classic logo */
 .nav-logo {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 1.8rem;
+    font-family: var(--heading-font);
+    color: var(--primary-dark);
     text-decoration: none;
-    color: var(--text-dark);
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 .nav-logo span {
-    color: var(--primary-color);
+    color: var(--accent-color);
+    font-style: italic;
 }
 
-.nav-links {
+.nav-links, .nav-icons {
     display: flex;
     gap: 30px;
+    align-items: center;
 }
 
-.nav-item {
+/* Clean, uppercase navigation links */
+.nav-item, .nav-icon-btn {
     text-decoration: none;
-    color: var(--text-dark);
-    font-weight: 600;
-    font-size: 14px;
+    color: var(--primary-dark);
+    font-family: var(--body-font);
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: var(--transition);
-    padding-bottom: 5px;
-    border-bottom: 3px solid transparent;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    transition: color 0.3s ease;
+    position: relative;
 }
 
-.nav-item:hover {
-    color: var(--primary-color);
-    border-bottom: 3px solid var(--primary-color);
+/* A delicate hover underline effect */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
 }
 
-.nav-icons {
-    display: flex;
-    gap: 20px;
+.nav-item:hover::after {
+    width: 100%;
 }
 
-.nav-icon-btn {
-    text-decoration: none;
-    color: var(--text-dark);
-    font-weight: 500;
-    font-size: 15px;
-    transition: var(--transition);
+.nav-item:hover, .nav-icon-btn:hover {
+    color: var(--accent-color);
 }
 
-.nav-icon-btn:hover {
-    color: var(--primary-color);
+/* Ensure the cart badge fits the new theme */
+.cart-badge {
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 7px;
+    font-size: 0.7rem;
+    margin-left: 5px;
+    vertical-align: top;
 }

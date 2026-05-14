@@ -23,6 +23,9 @@ public class Order {
     @Column(name = "order_date")
     private LocalDateTime orderDate = LocalDateTime.now();
 
+    @Column(name = "address")
+    private String address;
+
     public Order() {}
 
     // --- Getters and Setters ---
@@ -40,4 +43,7 @@ public class Order {
 
     public LocalDateTime getOrderDate() { return orderDate; }
     public void setOrderDate(LocalDateTime orderDate) { this.orderDate = orderDate; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 }

@@ -1,0 +1,125 @@
+/* --- ORDER ARCHIVE STYLING --- */
+.orders-page-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    min-height: 60vh;
+    animation: fadeInOrders 0.8s ease-out;
+}
+
+.orders-title {
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.orders-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background-color: var(--accent-color);
+    margin: 15px auto 0;
+}
+
+/* --- RECEIPT CARDS --- */
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.order-receipt-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 25px 30px;
+    /* Soft shadow to look like heavy parchment paper */
+    box-shadow: 0 4px 15px rgba(54, 44, 40, 0.04);
+    transition: transform 0.3s ease;
+    border-left: 4px solid var(--accent-color);
+}
+
+.order-receipt-card:hover {
+    transform: translateX(5px);
+}
+
+.receipt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.receipt-number {
+    font-family: var(--heading-font);
+    font-size: 1.3rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.receipt-date {
+    font-family: var(--body-font);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.receipt-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.receipt-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    font-family: var(--body-font);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.detail-value {
+    font-family: var(--body-font);
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.detail-value.price {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+/* --- EMPTY STATE --- */
+.empty-orders {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+.empty-orders h2 {
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+.empty-orders p {
+    color: var(--text-muted);
+    margin-bottom: 25px;
+}
+
+@keyframes fadeInOrders {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}

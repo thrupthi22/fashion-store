@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import API from '../services/api';
 import ProductCard from '../components/ProductCard';
-import { useParams } from 'react-router-dom'; // NEW IMPORT
+import { useParams } from 'react-router-dom';
 import '../styles/Home.css';
 
 const Home = () => {
     const [products, setProducts] = useState([]);
-    const { categoryName } = useParams(); // NEW: Grabs "Men" or "Women" from the URL!
+    const [maxPrice, setMaxPrice] = useState(3000);
+    const { categoryName } = useParams();
 
-    // Run this whenever the page loads OR when the categoryName changes
+    // NEW: Reference to the product section for the scroll hook
+    const trendingRef = useRef(null);
+
     useEffect(() => {
         fetchProducts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -16,7 +19,6 @@ const Home = () => {
 
     const fetchProducts = async () => {
         try {
-            // If we clicked a category, use that API. Otherwise, get everything!
             const endpoint = categoryName ? `/products/category/${categoryName}` : '/products';
             const response = await API.get(endpoint);
             setProducts(response.data);
@@ -25,30 +27,54 @@ const Home = () => {
         }
     };
 
+    // NEW: Smooth scroll function
+    const scrollToCollection = () => {
+        trendingRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
     return (
         <div className="home-container">
-            {/* Hero section stays exactly the same... */}
+            {/* The Hero Section with animation */}
             <section className="hero-section">
-                <div className="hero-content">
-                    <h1 className="hero-hook">Style That Defines You</h1>
-                    <p className="hero-subtext">Discover the latest trends in fashion. Wear your confidence every single day.</p>
-                    <button className="btn-primary">Shop The Collection</button>
+                <div className="hero-content hero-fade-in">
+                    <h1 className="hero-hook">Timeless Elegance.</h1>
+                    <p className="hero-subtext">Curated vintage-inspired pieces to define your personal narrative.</p>
+                    <button className="btn-primary shop-btn" onClick={scrollToCollection}>
+                        Shop The Collection
+                    </button>
                 </div>
             </section>
 
-            <section className="trending-section">
-                {/* Dynamically update the title based on the category */}
+            {/* Added the ref here so the button knows where to scroll! */}
+            <section className="trending-section" ref={trendingRef}>
                 <h2 className="section-title">
-                    {categoryName ? `${categoryName}'s Collection` : "Trending Now"}
+                    {categoryName ? `${categoryName}'s Archive` : "Curated Collection"}
                 </h2>
+
+                <div className="filter-container" style={{ textAlign: 'center', marginBottom: '40px' }}>
+                    <label style={{ fontFamily: 'var(--body-font)', letterSpacing: '1px', textTransform: 'uppercase', fontSize: '0.85rem', color: 'var(--text-muted)', marginRight: '15px' }}>
+                        Maximum Investment: ₹{maxPrice}
+                    </label>
+                    <input
+                        type="range"
+                        min="100"
+                        max="3000"
+                        step="100"
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(e.target.value)}
+                        style={{ cursor: 'pointer', accentColor: 'var(--accent-color)' }}
+                    />
+                </div>
 
                 <div className="product-grid">
                     {products.length > 0 ? (
-                        products.map((product) => (
-                            <ProductCard key={product.id} product={product} />
-                        ))
+                        products
+                            .filter(product => product.price <= maxPrice)
+                            .map((product) => (
+                                <ProductCard key={product.id} product={product} />
+                            ))
                     ) : (
-                        <p>No products found for this category.</p>
+                        <p style={{textAlign: 'center', width: '100%', color: 'var(--text-muted)'}}>No archive pieces found.</p>
                     )}
                 </div>
             </section>

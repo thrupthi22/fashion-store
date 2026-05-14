@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import API from '../services/api';
 import { useNavigate, Link } from 'react-router-dom';
-import '../styles/Login.css'; // We can reuse the same CSS file for the layout!
+import API from '../services/api';
+import '../styles/Login.css'; // We share the exact same CSS file!
 
 const Signup = () => {
-    // State to hold the user's input
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,48 +12,64 @@ const Signup = () => {
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            // Send the data to your Spring Boot backend
-            await API.post('/users/signup', { name, email, password });
+            // Adjust this URL if your Spring Boot register endpoint is named differently
+            await API.post('/users/register', { name, email, password });
 
-            alert('Account created successfully! Please log in.');
-            navigate('/login'); // Send them to the login page after successful signup
+            alert('Account created successfully! Please sign in.');
+            navigate('/login'); // Send them to the login page after success
         } catch (error) {
-            alert('Signup failed. That email might already be registered.');
+            console.error("Signup failed", error);
+            alert('Error creating account. Please try again.');
         }
     };
 
     return (
-        <div className="login-container">
-            <form onSubmit={handleSignup} className="login-form">
-                <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Create Account</h2>
+        <div className="auth-container">
+            <div className="auth-card">
+                <h2 className="auth-title">Join the Archive</h2>
+                <p className="auth-subtitle">Create an account to begin your personal narrative.</p>
 
-                <input
-                    type="text"
-                    placeholder="First Name"
-                    onChange={e => setName(e.target.value)}
-                    required
-                />
-                <input
-                    type="email"
-                    placeholder="Email Address"
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                />
+                <form className="auth-form" onSubmit={handleSignup}>
+                    <div className="input-group">
+                        <label>Full Name</label>
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Jane Doe"
+                            required
+                        />
+                    </div>
 
-                <button type="submit" className="btn-primary" style={{ width: '100%', marginTop: '10px' }}>
-                    Sign Up
-                </button>
+                    <div className="input-group">
+                        <label>Email Address</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="your@email.com"
+                            required
+                        />
+                    </div>
 
-                <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px' }}>
-                    Already have an account? <Link to="/login" style={{ color: 'var(--primary-color)', textDecoration: 'none', fontWeight: '600' }}>Login here</Link>
-                </p>
-            </form>
+                    <div className="input-group">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Create a strong password"
+                            required
+                        />
+                    </div>
+
+                    <button type="submit" className="btn-primary">Create Account</button>
+                </form>
+
+                <div className="auth-link">
+                    <p>Already have an account? <Link to="/login">Sign in here</Link></p>
+                </div>
+            </div>
         </div>
     );
 };

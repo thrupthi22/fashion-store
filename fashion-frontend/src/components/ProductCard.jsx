@@ -27,6 +27,10 @@ const ProductCard = ({ product }) => {
                 quantity: 1
             });
             alert(`${product.title} added to your cart! 🛍️`);
+
+            // NEW: Shout to the Navbar to refresh its count!
+            window.dispatchEvent(new Event('cartUpdated'));
+
         } catch (error) {
             console.error("Error adding to cart", error);
             alert('Failed to add to cart. Please try again.');

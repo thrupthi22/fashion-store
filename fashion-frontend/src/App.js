@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Cart from './pages/Cart';
+import Footer from './components/Footer';
 import Orders from './pages/Orders';
 import Profile from './pages/Profile'; // <-- NEW: Imported the Profile page
 

@@ -6,6 +6,12 @@ import '../styles/Cart.css';
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [address, setAddress] = useState('');
+
+    // NEW: States for dummy payment integration
+    const [paymentMethod, setPaymentMethod] = useState('card');
+    const [isProcessing, setIsProcessing] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,12 +41,10 @@ const Cart = () => {
     };
 
     const handleUpdateQuantity = async (cartItemId, newQuantity) => {
-        // Prevent quantity from going below 1
         if (newQuantity < 1) return;
-
         try {
             await API.put(`/cart/update/${cartItemId}?quantity=${newQuantity}`);
-            fetchCart(); // Refresh the cart to update the total price immediately
+            fetchCart();
         } catch (error) {
             console.error("Error updating quantity", error);
         }
@@ -50,29 +54,46 @@ const Cart = () => {
         try {
             await API.delete(`/cart/remove/${cartItemId}`);
             fetchCart();
+            window.dispatchEvent(new Event('cartUpdated'));
         } catch (error) {
             console.error("Error removing item", error);
         }
     };
 
-    // --- NEW CHECKOUT FUNCTION ---
     const handleCheckout = async () => {
+        if (!address.trim()) {
+            alert('Please enter a delivery address before checking out!');
+            return;
+        }
+
         const userString = localStorage.getItem('user');
         if (!userString) {
             navigate('/login');
             return;
         }
 
-        const user = JSON.parse(userString);
-        try {
-            // Tell Spring Boot to process the order and clear the cart
-            await API.post(`/orders/checkout/${user.id}`);
-            alert('🎉 Order Placed Successfully!');
-            navigate('/orders'); // Redirect them to their new Orders page!
-        } catch (error) {
-            console.error("Checkout failed", error);
-            alert('Failed to place order. Please try again.');
-        }
+        // NEW: Start the dummy payment processing!
+        setIsProcessing(true);
+
+        // We use setTimeout to create a fake 2-second delay simulating a bank connection
+        setTimeout(async () => {
+            const user = JSON.parse(userString);
+            try {
+                await API.post(`/orders/checkout/${user.id}?address=${encodeURIComponent(address)}`);
+
+                window.dispatchEvent(new Event('cartUpdated'));
+
+                // Stop the loading spinner
+                setIsProcessing(false);
+
+                alert(`🎉 Payment Successful via ${paymentMethod.toUpperCase()}! Order Placed.`);
+                navigate('/orders');
+            } catch (error) {
+                console.error("Checkout failed", error);
+                setIsProcessing(false);
+                alert('Failed to place order. Please try again.');
+            }
+        }, 2000); // 2000 milliseconds = 2 seconds
     };
 
     return (
@@ -127,11 +148,77 @@ const Cart = () => {
                             <span>₹{totalPrice.toFixed(2)}</span>
                         </div>
 
-                        {/* --- UPDATED BUTTON --- */}
-                        <button className="btn-primary checkout-btn" onClick={handleCheckout}>
-                            Proceed to Checkout
-                        </button>
+                        {/* Address Input Area */}
+                        <div style={{ marginTop: '20px', marginBottom: '10px', textAlign: 'left' }}>
+                            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
+                                Delivery Address:
+                            </label>
+                            <textarea
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                placeholder="Enter your full street address, city, and zip code..."
+                                rows="3"
+                                style={{
+                                    width: '100%',
+                                    padding: '10px',
+                                    borderRadius: '5px',
+                                    border: '1px solid #ccc',
+                                    resize: 'vertical'
+                                }}
+                            />
+                        </div>
 
+                        {/* NEW: Dummy Payment Integration UI */}
+                        <div style={{ marginTop: '10px', marginBottom: '20px', textAlign: 'left' }}>
+                            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>
+                                Payment Method:
+                            </label>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                <label style={{ cursor: 'pointer' }}>
+                                    <input
+                                        type="radio"
+                                        name="payment"
+                                        value="card"
+                                        checked={paymentMethod === 'card'}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                        style={{ marginRight: '8px' }}
+                                    />
+                                    Credit / Debit Card (Dummy)
+                                </label>
+                                <label style={{ cursor: 'pointer' }}>
+                                    <input
+                                        type="radio"
+                                        name="payment"
+                                        value="upi"
+                                        checked={paymentMethod === 'upi'}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                        style={{ marginRight: '8px' }}
+                                    />
+                                    UPI / Google Pay (Dummy)
+                                </label>
+                                <label style={{ cursor: 'pointer' }}>
+                                    <input
+                                        type="radio"
+                                        name="payment"
+                                        value="cod"
+                                        checked={paymentMethod === 'cod'}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                        style={{ marginRight: '8px' }}
+                                    />
+                                    Cash on Delivery
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* UPDATED: Dynamic Button that shows "Processing..." when clicked */}
+                        <button
+                            className="btn-primary checkout-btn"
+                            onClick={handleCheckout}
+                            disabled={isProcessing} // Disable button while loading
+                            style={{ opacity: isProcessing ? 0.7 : 1, cursor: isProcessing ? 'not-allowed' : 'pointer' }}
+                        >
+                            {isProcessing ? 'Processing Payment...' : `Pay ₹${totalPrice.toFixed(2)}`}
+                        </button>
                     </div>
                 </div>
             )}

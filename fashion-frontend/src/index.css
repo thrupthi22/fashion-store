@@ -1,108 +1,60 @@
-/* =========================================
-   1. GLOBAL FONT & VARIABLES
-   ========================================= */
-/* Importing a clean, premium font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
 
+/* --- PREMIUM VINTAGE BRAND VARIABLES --- */
 :root {
-    /* Brand Colors */
-    --primary-color: #ff3f6c; /* Myntra Pink */
-    --primary-hover: #e0355f;
+    --primary-dark: #362C28; /* Deep Espresso Brown */
+    --accent-color: #A86A4C; /* Vintage Terracotta/Rust */
+    --accent-hover: #8A553C; /* Darker Terracotta */
+    --bg-light: #F4F1EA;     /* Warm Parchment / Cream */
+    --card-bg: #FCFAF6;      /* Off-White for cards */
+    --text-muted: #7A726E;   /* Sophisticated Gray-Brown */
+    --border-color: #E2DCD0; /* Subtle Warm Border */
 
-    /* Text Colors */
-    --text-dark: #282c3f;     /* Deep gray for headings */
-    --text-light: #535766;    /* Soft gray for descriptions/footer */
-
-    /* Background Colors */
-    --bg-color: #fdfbfb;
-    --white: #ffffff;
-
-    /* Animations */
-    --transition: all 0.3s ease;
-}
-
-/* =========================================
-   2. GLOBAL RESETS
-   ========================================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif; /* Overrides the default React fonts */
+    --heading-font: 'Playfair Display', serif;
+    --body-font: 'Lato', sans-serif;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-dark);
+    background-color: var(--bg-light);
+    color: var(--primary-dark);
+    font-family: var(--body-font);
+    margin: 0;
+    padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* =========================================
-   3. GLOBAL COMPONENTS
-   ========================================= */
-/* A reusable button style used across the whole app */
-.btn-primary {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 12px 30px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
     font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
+    margin: 0;
+}
+
+/* --- ELEGANT BUTTON SYSTEM --- */
+.btn-primary, .add-to-cart-btn, .checkout-btn {
+    background-color: var(--primary-dark);
+    color: var(--bg-light);
+    border: 1px solid var(--primary-dark);
+    border-radius: 2px; /* Sharp, classic edges */
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-family: var(--body-font);
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-hover);
+.btn-primary:hover, .add-to-cart-btn:hover, .checkout-btn:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 63, 108, 0.3);
+    box-shadow: 0 8px 15px rgba(168, 106, 76, 0.2); /* Soft terracotta glow */
 }
 
-/* =========================================
-   4. PROFESSIONAL FOOTER STYLES
-   ========================================= */
-.professional-footer {
-    background-color: var(--white);
-    border-top: 1px solid #eaeaec;
-    padding: 30px 0;
-    margin-top: 80px; /* Pushes the footer down away from content */
+.btn-primary:active, .add-to-cart-btn:active, .checkout-btn:active {
+    transform: translateY(0);
 }
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between; /* Copyright on left, Links on right */
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.copyright-text {
-    color: var(--text-light);
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.footer-links {
-    display: flex;
-    gap: 25px;
-}
-
-.footer-link-item {
-    text-decoration: none;
-    color: var(--text-light);
-    font-size: 14px;
-    font-weight: 500;
-    transition: var(--transition);
-}
-
-.footer-link-item:hover {
-    color: var(--primary-color);
-}
-

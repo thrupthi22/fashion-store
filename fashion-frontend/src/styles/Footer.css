@@ -1,0 +1,86 @@
+.footer-container {
+    background-color: var(--primary-dark);
+    color: var(--bg-light);
+    padding: 60px 20px 20px;
+    margin-top: 80px; /* Pushes it away from the content */
+    border-top: 4px solid var(--accent-color);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.footer-logo {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: var(--bg-light);
+}
+
+.footer-logo span {
+    color: var(--accent-color);
+    font-style: italic;
+}
+
+.footer-tagline {
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    color: #b0a8a5; /* Softened light brown/grey */
+    line-height: 1.6;
+    max-width: 350px;
+}
+
+.footer-links-section {
+    display: flex;
+    gap: 60px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-column h3 {
+    font-family: var(--body-font);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.footer-column a {
+    color: #b0a8a5;
+    text-decoration: none;
+    font-family: var(--body-font);
+    font-size: 0.9rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-column a:hover {
+    color: var(--bg-light);
+    transform: translateX(3px); /* Cute little slide effect */
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    font-family: var(--body-font);
+    font-size: 0.8rem;
+    color: #b0a8a5;
+    letter-spacing: 1px;
+}
